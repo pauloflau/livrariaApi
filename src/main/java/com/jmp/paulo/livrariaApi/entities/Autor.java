@@ -10,8 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -32,7 +32,8 @@ public class Autor {
 	@Column(length = 100, nullable = false)
 	private String nacionalidade;
 	
-	@OneToMany(mappedBy = "autor")
+	//@OneToMany(mappedBy = "autor")
+	@Transient
 	private List<Livro> livros;
 	
 	public Autor() {
@@ -106,6 +107,23 @@ public class Autor {
 			return false;
 		Autor other = (Autor) obj;
 		return Objects.equals(id, other.id);
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Autor [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", nacionalidade="
+				+ nacionalidade + ", livros=" + livros + "]";
+	}
+
+
+
+	public Autor(String nome, LocalDate dataNascimento, String nacionalidade) {
+		super();
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.nacionalidade = nacionalidade;
 	}
 	
 	
