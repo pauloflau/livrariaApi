@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Data;
@@ -32,8 +36,8 @@ public class Autor {
 	@Column(length = 100, nullable = false)
 	private String nacionalidade;
 	
-	//@OneToMany(mappedBy = "autor")
-	@Transient
+	@OneToMany(mappedBy = "autor")
+	@JsonManagedReference
 	private List<Livro> livros;
 	
 	public Autor() {
@@ -114,7 +118,7 @@ public class Autor {
 	@Override
 	public String toString() {
 		return "Autor [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", nacionalidade="
-				+ nacionalidade + ", livros=" + livros + "]";
+				+ nacionalidade + "]";
 	}
 
 

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,8 +44,16 @@ public class Livro {
 	private BigDecimal preco;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name="id_autor")
 	private Autor autor;
+
+	@Override
+	public String toString() {
+		return "Livro [id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", dataPublicacao=" + dataPublicacao
+				+ ", genero=" + genero + ", preco=" + preco + "]";
+	}
+	
+	
 
 }

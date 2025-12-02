@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.jmp.paulo.livrariaApi.entities.Autor;
 
+
 @Repository
 public interface AutorRepository extends JpaRepository<Autor, UUID>{
-
+	Autor findByNome(String nome);
 }
