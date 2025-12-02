@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -40,7 +41,8 @@ public class Livro {
 	@Column(precision = 18, scale = 2, nullable = false)
 	private BigDecimal preco;
 	
-	@ManyToOne//(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
+	//@ManyToOne
 	@JoinColumn(name="id_autor")
 	private Autor autor;
 

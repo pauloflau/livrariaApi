@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.jmp.paulo.livrariaApi.entities.Livro;
 
+
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, UUID>{
-
+	Livro findByIsbn(String isbn);
 }
