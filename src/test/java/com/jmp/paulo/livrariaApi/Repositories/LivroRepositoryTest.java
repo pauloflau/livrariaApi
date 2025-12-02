@@ -35,7 +35,7 @@ public class LivroRepositoryTest {
 		livro.setDataPublicacao(LocalDate.of(1980, 1,2));
 		
 		Autor autor = new Autor("Maria", LocalDate.of(1983, 2, 22), "Italiana");
-		autor = autorRepository.save(autor);
+		//autor = autorRepository.save(autor);
 
 		livro.setAutor(autor);
 		
