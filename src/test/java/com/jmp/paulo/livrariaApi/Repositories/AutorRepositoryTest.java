@@ -1,6 +1,8 @@
 package com.jmp.paulo.livrariaApi.Repositories;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.jmp.paulo.livrariaApi.entities.Autor;
+import com.jmp.paulo.livrariaApi.entities.GeneroLivro;
+import com.jmp.paulo.livrariaApi.entities.Livro;
 import com.jmp.paulo.livrariaApi.repositories.AutorRepository;
+import com.jmp.paulo.livrariaApi.repositories.LivroRepository;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -21,6 +26,9 @@ public class AutorRepositoryTest {
 
 	@Autowired
 	AutorRepository autorRepository;
+	
+	@Autowired
+	LivroRepository livroRepository;
 
 	@Test
 	@Order(0)
@@ -100,5 +108,36 @@ public class AutorRepositoryTest {
 		System.out.println();
 		System.out.println("LISTAGEM DE AUTORES DEPOIS DE APAGAR");
 		listarTodosAutores();
+	}
+	
+	@Test
+	@Order(6)
+	public void salvarAutorComLivrosTest() {
+		Autor autor = new Autor();
+		autor.setNome("Paulo");
+		autor.setNacionalidade("Brasileira");
+		autor.setDataNascimento(LocalDate.of(1983, 2, 22));
+		
+		Livro livro1 = new Livro();
+		livro1.setIsbn("9999999");
+		livro1.setPreco(BigDecimal.valueOf(130));
+		livro1.setGenero(GeneroLivro.FICCAO);
+		livro1.setTitulo("UFO");
+		livro1.setDataPublicacao(LocalDate.of(1980, 1, 2));
+		
+		Livro livro2 = new Livro();
+		livro2.setIsbn("2222222");
+		livro2.setPreco(BigDecimal.valueOf(80));
+		livro2.setGenero(GeneroLivro.FANTASIA);
+		livro2.setTitulo("casa assombrada");
+		livro2.setDataPublicacao(LocalDate.of(1990, 1, 2));
+		
+		autor.setLivros(new ArrayList<>());  //crio uma lista de livros
+		autor.getLivros().add(livro1);  //adiciono os livros
+		autor.getLivros().add(livro2);
+		
+		autorRepository.save(autor);//salvo o autor
+		livroRepository.saveAll(autor.getLivros()); //salvo o livro
+		System.out.println(autor.toString());
 	}
 }
