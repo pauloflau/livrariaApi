@@ -2,6 +2,7 @@ package com.jmp.paulo.livrariaApi.Repositories;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.MethodOrderer;
@@ -75,6 +76,16 @@ public class LivroRepositoryTest {
 	
 	@Test
 	@Order(3)
+	public void ListarLivros() {
+		Autor autor = autorRepository.findByNome("Jose");
+		List<Livro> livros = livroRepository.findByAutor(autor);
+		autor.setLivros(livros);
+		System.out.println("LISTA DE LIVROS");
+		autor.getLivros().forEach(System.out::println);
+	}
+	
+	@Test
+	@Order(4)
 	public void deletar() {
 		Livro livro = livroRepository.findByIsbn("984758349");
 
