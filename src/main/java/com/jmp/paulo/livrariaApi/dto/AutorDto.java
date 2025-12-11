@@ -1,9 +1,10 @@
 package com.jmp.paulo.livrariaApi.dto;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class AutorDto {
-	
+	private UUID id;
 	private String nome;
 	private LocalDate dataNascimento;
 	private String nacionalidade;
@@ -17,6 +18,14 @@ public class AutorDto {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.nacionalidade = nacionalidade;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	public String getNome() {

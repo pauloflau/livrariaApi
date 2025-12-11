@@ -18,6 +18,7 @@ public class Mapper {
 	
 	public AutorDto autorToDto(Autor autor) {
 		AutorDto dto = new AutorDto();
+		dto.setId(autor.getId());
 		dto.setNome(autor.getNome());
 		dto.setNacionalidade(autor.getNacionalidade());
 		dto.setDataNascimento(autor.getDataNascimento());
