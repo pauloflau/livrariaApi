@@ -2,15 +2,18 @@ package com.jmp.paulo.livrariaApi.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +25,7 @@ import lombok.Data;
 @Entity
 @Table(name = "tb_livro")
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Livro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,18 +46,26 @@ public class Livro {
 
 	@Column(precision = 18, scale = 2, nullable = false)
 	private BigDecimal preco;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonBackReference
-	@JoinColumn(name="id_autor")
+
+	@ManyToOne
+	@JoinColumn(name = "id_autor")
 	private Autor autor;
+
+	@CreatedDate 
+	@Column(name = "data_cadastro", nullable = false)
+	private LocalDateTime dataCadastro;
+
+	@LastModifiedDate 
+	@Column(name = "data_atualizacao", nullable = false)
+	private LocalDateTime dataAtualizacao;
+
+	@Column(name = "id_usuario")
+	private Long idUsuario;
 
 	@Override
 	public String toString() {
 		return "Livro [id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", dataPublicacao=" + dataPublicacao
 				+ ", genero=" + genero + ", preco=" + preco + "]";
 	}
-	
-	
 
 }
