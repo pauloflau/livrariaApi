@@ -2,7 +2,6 @@ package com.jmp.paulo.livrariaApi.controller;
 
 import java.net.URI;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,7 @@ import com.jmp.paulo.livrariaApi.entities.Autor;
 import com.jmp.paulo.livrariaApi.services.AutorService;
 
 @RestController
-@RequestMapping("autores")
+@RequestMapping("/autores")
 public class AutorController {
 	
 	private AutorService autorService;
@@ -33,8 +32,9 @@ public class AutorController {
 		Autor autor = autorService.salvar(Mapper.dtoToAutor(dto));
 		
 		URI location = ServletUriComponentsBuilder
-		    .fromCurrentContextPath()	 
-		    .path("/{id}")		 
+		    //.fromCurrentContextPath()	 
+			.fromCurrentRequest()
+			.path("/{id}")		 
 		    .buildAndExpand(autor.getId())  
 		    .toUri();                               
 			
