@@ -18,6 +18,18 @@ public class AutorService {
 		this.autorRepository = autorRepository;
 	}
 	
+	public List<Autor> pesquisar(String nome, String nacionalidade){
+		if(nome != null && nacionalidade != null) {
+			return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
+		}else if(nome == null && nacionalidade == null) {
+			return autorRepository.findAll();
+		}else if(nome != null && nacionalidade == null) {
+			return autorRepository.findByNome(nome);
+		}else{
+			return autorRepository.findByNacionalidade(nacionalidade);
+		}
+	}
+	
 	public void delete(UUID id){
 		autorRepository.deleteById(id);
 	}

@@ -77,7 +77,7 @@ public class LivroRepositoryTest {
 	@Test
 	@Order(3)
 	public void ListarLivros() {
-		Autor autor = autorRepository.findByNome("Jose");
+		Autor autor = autorRepository.findByNome("Jose").get(0);
 		List<Livro> livros = livroRepository.findByAutor(autor);
 		autor.setLivros(livros);
 		System.out.println("LISTA DE LIVROS");

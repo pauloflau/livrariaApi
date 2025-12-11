@@ -149,7 +149,7 @@ public class AutorRepositoryTest {
 	@Order(7)
 	@Transactional
 	public void listarLivrosAutor() {
-		Autor autor = autorRepository.findByNome("Duda");
+		Autor autor = (Autor) autorRepository.findByNome("Duda");
 		System.out.println("Listou livros do autor: " + autor.getLivros().toString());
 		//autor.getLivros().forEach(System.out::println);
 	}
