@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,25 @@ public class AutorController {
 	public AutorController(AutorService autorService) {
 		super();
 		this.autorService = autorService;
+	}
+	
+	@PutMapping("{idAutor}")
+	public ResponseEntity<Void> atualizar(@PathVariable String idAutor, @RequestBody AutorDto dto){
+		UUID id = UUID.fromString(idAutor);
+		Optional<Autor> buscarAutor = autorService.findById(id);
+		
+		if(buscarAutor.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		Autor autor = buscarAutor.get();
+		
+		autor.setNome(dto.getNome());
+		autor.setDataNascimento(dto.getDataNascimento());
+		autor.setNacionalidade(dto.getNacionalidade());
+		
+		autorService.atualizar(autor);
+		return ResponseEntity.noContent().build();		
 	}
 
 	@GetMapping("/pesquisar")

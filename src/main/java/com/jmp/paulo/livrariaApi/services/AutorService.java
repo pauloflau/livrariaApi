@@ -18,6 +18,10 @@ public class AutorService {
 		this.autorRepository = autorRepository;
 	}
 	
+	public Autor atualizar(Autor autor) {
+		return autorRepository.save(autor);
+	}
+	
 	public List<Autor> pesquisar(String nome, String nacionalidade){
 		if(nome != null && nacionalidade != null) {
 			return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
