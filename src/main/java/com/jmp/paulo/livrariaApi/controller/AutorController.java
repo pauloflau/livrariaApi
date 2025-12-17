@@ -23,6 +23,8 @@ import com.jmp.paulo.livrariaApi.dto.AutorDto;
 import com.jmp.paulo.livrariaApi.entities.Autor;
 import com.jmp.paulo.livrariaApi.services.AutorService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/autores")
 public class AutorController {
@@ -35,7 +37,7 @@ public class AutorController {
 	}
 	
 	@PutMapping("{idAutor}")
-	public ResponseEntity<Void> atualizar(@PathVariable String idAutor, @RequestBody AutorDto dto){
+	public ResponseEntity<Void> atualizar(@PathVariable String idAutor, @RequestBody @Valid AutorDto dto){
 		UUID id = UUID.fromString(idAutor);
 		Optional<Autor> buscarAutor = autorService.findById(id);
 		
@@ -103,7 +105,7 @@ public class AutorController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> salvar(@RequestBody AutorDto dto) {
+	public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDto dto) {
 		Autor autor = autorService.salvar(Mapper.dtoToAutor(dto));
 
 		URI location = ServletUriComponentsBuilder
