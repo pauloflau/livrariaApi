@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.jmp.paulo.livrariaApi.Mapper.Mapper;
+import com.jmp.paulo.livrariaApi.Mapper.MapperAutor;
 import com.jmp.paulo.livrariaApi.dto.AutorDto;
 import com.jmp.paulo.livrariaApi.entities.Autor;
 import com.jmp.paulo.livrariaApi.services.AutorService;
@@ -64,7 +64,7 @@ public class AutorController {
 		List<AutorDto> listaDto = new ArrayList<>();
 		
 		for (Autor autor : lista) {
-			listaDto.add(Mapper.autorToDto(autor));
+			listaDto.add(MapperAutor.autorToDto(autor));
 		}
 		return ResponseEntity.ok(listaDto);
 	}
@@ -86,7 +86,7 @@ public class AutorController {
 		Optional<Autor> autor = autorService.findById(id);
 		if (autor.isPresent()) {
 			AutorDto dto = new AutorDto();
-			dto = Mapper.autorToDto(autor.get());
+			dto = MapperAutor.autorToDto(autor.get());
 			return ResponseEntity.ok(dto);
 		}
 		return ResponseEntity.notFound().build();
@@ -98,15 +98,15 @@ public class AutorController {
 		List<AutorDto> listaDto = new ArrayList<>();
 
 		for (Autor autor : lista) {
-			listaDto.add(Mapper.autorToDto(autor));
+			listaDto.add(MapperAutor.autorToDto(autor));
 		}
 		return ResponseEntity.ok(listaDto);
 
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDto dto) {
-		Autor autor = autorService.salvar(Mapper.dtoToAutor(dto));
+	public ResponseEntity<Autor> salvar(@RequestBody @Valid AutorDto dto) {
+		Autor autor = autorService.salvar(MapperAutor.dtoToAutor(dto));
 
 		URI location = ServletUriComponentsBuilder
 				// .fromCurrentContextPath()

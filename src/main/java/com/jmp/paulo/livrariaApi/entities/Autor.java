@@ -51,9 +51,6 @@ public class Autor {
 	@Column(name = "data_atualizacao", nullable = false)
 	private LocalDateTime dataAtualizacao;
 
-	@Column(name = "id_usuario")
-	private Long idUsuario;
-
 	public Autor() {
 		// TODO Auto-generated constructor stub
 	}
@@ -116,14 +113,6 @@ public class Autor {
 
 	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
-	}
-
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
 	}
 
 	public void setLivros(List<Livro> livros) {

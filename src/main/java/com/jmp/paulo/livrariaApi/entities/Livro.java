@@ -59,9 +59,6 @@ public class Livro {
 	@Column(name = "data_atualizacao", nullable = false)
 	private LocalDateTime dataAtualizacao;
 
-	@Column(name = "id_usuario")
-	private Long idUsuario;
-
 	@Override
 	public String toString() {
 		return "Livro [id=" + id + ", isbn=" + isbn + ", titulo=" + titulo + ", dataPublicacao=" + dataPublicacao

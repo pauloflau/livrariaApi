@@ -6,7 +6,7 @@ import com.jmp.paulo.livrariaApi.entities.Autor;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class Mapper {
+public class MapperAutor {
 
 	public Autor dtoToAutor(AutorDto dto) {
 		Autor autor = new Autor();
