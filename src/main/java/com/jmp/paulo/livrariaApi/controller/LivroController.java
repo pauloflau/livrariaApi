@@ -1,11 +1,14 @@
 package com.jmp.paulo.livrariaApi.controller;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.jmp.paulo.livrariaApi.Mapper.MapperLivro;
 import com.jmp.paulo.livrariaApi.dto.LivroCadastroDto;
@@ -36,8 +39,16 @@ public class LivroController {
 			// 3. Converte o Livro salvo em um DTO de resposta
 			LivroRespostaPesquisaDto resposta = MapperLivro.livroToDto(livro);
 
+			//crio um location mostrando meu id
+			URI location = ServletUriComponentsBuilder
+					.fromCurrentRequest() 
+					.path("/{id}") 
+					.buildAndExpand(livro.getId())
+					.toUri(); 
+			
+			
 			// 4. Retorna 200 OK com os dados do livro cadastrado
-			return ResponseEntity.ok(resposta);
+			return ResponseEntity.created(location).body(resposta);
 
 		} catch (RegistroDuplicadoException e) {
 			ErroResposta erroDto = ErroResposta.conflito(e.getMessage());
