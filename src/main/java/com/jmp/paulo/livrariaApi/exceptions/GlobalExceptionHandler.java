@@ -12,6 +12,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+	
+	 @ExceptionHandler(AutorNaoEncontradoException.class)
+	 @ResponseStatus(HttpStatus.NOT_FOUND)
+	 public ErroResposta handleAutorNaoEncontradoException(AutorNaoEncontradoException e) {
+		 return new ErroResposta(
+			HttpStatus.NOT_FOUND.value(),
+			e.getMessage(),
+			List.of()
+		);
+	 }
+	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	public ErroResposta handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
