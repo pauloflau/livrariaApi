@@ -40,4 +40,24 @@ public class LivroService {
 	public void deletar(Livro livro){
 		livroRepository.delete(livro);
 	}
+	
+	public void atualizar(Livro livro) {
+	    Livro livroExistente = livroRepository.findById(livro.getId())
+		.orElseThrow(() -> new IllegalArgumentException("Livro não encontrado"));
+
+	    livroExistente.setTitulo(livro.getTitulo());
+	    livroExistente.setIsbn(livro.getIsbn());
+	    livroExistente.setGenero(livro.getGenero());
+	    livroExistente.setDataPublicacao(livro.getDataPublicacao());
+	    livroExistente.setPreco(livro.getPreco());
+
+	    // Atualiza o autor corretamente
+	    Autor autor = autorRepository.findById(livro.getAutor().getId())
+		.orElseThrow(() -> new AutorNaoEncontradoException("Autor não encontrado"));
+	    livroExistente.setAutor(autor);
+
+	    // Não altera dataCadastro! Mantém o valor já salvo
+
+	    livroRepository.save(livroExistente);
+	  }
 }

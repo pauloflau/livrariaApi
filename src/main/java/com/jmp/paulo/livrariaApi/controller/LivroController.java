@@ -4,12 +4,14 @@ import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -74,4 +76,21 @@ public class LivroController {
 		service.deletar(buscarLivro.get());
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PutMapping("{id}")
+	   public ResponseEntity<Void> atualizar(@PathVariable UUID id, @RequestBody LivroCadastroDto dto) {
+
+		Optional<Livro> buscarLivro = service.buscarId(id);// busco esse id
+
+		if (buscarLivro.isEmpty()) {// se nao achar nada
+			return ResponseEntity.notFound().build();// da erro de 404
+		}
+
+		Livro livro = MapperLivro.dtoToLivro(dto);//pego meu dto e transformo p livro
+			
+		livro.setId(id); //incluo o id no livro
+		service.atualizar(livro);//mando p classe service
+			
+		return ResponseEntity.noContent().build();
+	   }	
 }
