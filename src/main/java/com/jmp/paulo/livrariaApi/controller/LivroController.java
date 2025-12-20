@@ -29,7 +29,7 @@ public class LivroController {
 
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody @Valid LivroCadastroDto dto) {
-		try {
+		
 			// 1. Converte o DTO de entrada em uma entidade Livro
 			Livro livro = MapperLivro.dtoToLivro(dto);
 
@@ -45,14 +45,10 @@ public class LivroController {
 					.path("/{id}") 
 					.buildAndExpand(livro.getId())
 					.toUri(); 
-			
-			
+					
 			// 4. Retorna 200 OK com os dados do livro cadastrado
 			return ResponseEntity.created(location).body(resposta);
 
-		} catch (RegistroDuplicadoException e) {
-			ErroResposta erroDto = ErroResposta.conflito(e.getMessage());
-			return ResponseEntity.status(erroDto.getStatus()).body(erroDto);
-		}
+		
 	}
 }
