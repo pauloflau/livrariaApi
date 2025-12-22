@@ -10,17 +10,20 @@ import com.jmp.paulo.livrariaApi.entities.Livro;
 import com.jmp.paulo.livrariaApi.exceptions.AutorNaoEncontradoException;
 import com.jmp.paulo.livrariaApi.repositories.AutorRepository;
 import com.jmp.paulo.livrariaApi.repositories.LivroRepository;
+import com.jmp.paulo.livrariaApi.validador.LivroValidador;
 
 @Service
 public class LivroService {
 
 	private LivroRepository livroRepository;
 	private AutorRepository autorRepository;
+	private LivroValidador validador;
 
-	public LivroService(LivroRepository livroRepository, AutorRepository autorRepository) {
+	public LivroService(LivroRepository livroRepository, AutorRepository autorRepository, LivroValidador validador) {
 		super();
 		this.livroRepository = livroRepository;
 		this.autorRepository = autorRepository;
+		this.validador = validador;
 	}
 
 	public Optional<Livro> buscarId(UUID id) {
@@ -33,7 +36,8 @@ public class LivroService {
 				.orElseThrow(() -> new AutorNaoEncontradoException("Autor não encontrado"));
 
 		livro.setAutor(autor);
-
+		
+		validador.validar(livro);
 		return livroRepository.save(livro);
 	}
 	
@@ -58,6 +62,7 @@ public class LivroService {
 
 	    // Não altera dataCadastro! Mantém o valor já salvo
 
+	    validador.validar(livro);
 	    livroRepository.save(livroExistente);
 	  }
 }

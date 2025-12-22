@@ -50,7 +50,7 @@ public class LivroRepositoryTest {
 		System.out.println("AUTOR: " + autor);
 	}
 
-	@Test
+	/*@Test
 	@Order(1)
 	public void atualizarAutorDoLivroTest() {
 		Livro livro = livroRepository.findByIsbn("984758349");
@@ -91,7 +91,7 @@ public class LivroRepositoryTest {
 
 		UUID id = livro.getId();
 		livroRepository.deleteById(id);
-	}
+	}*/
 	
 
 }

@@ -1,6 +1,7 @@
 package com.jmp.paulo.livrariaApi.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,8 @@ import com.jmp.paulo.livrariaApi.entities.Livro;
 
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, UUID>{
-	Livro findByIsbn(String isbn);
+	//Livro findByIsbn(String isbn);
 	List<Livro> findByAutor(Autor autor);
 	List<Livro> findByTitulo(String titulo);
+	Optional<Livro> findByIsbn(String isbn);
 }
