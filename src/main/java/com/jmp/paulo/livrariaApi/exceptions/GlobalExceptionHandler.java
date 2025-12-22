@@ -11,10 +11,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import jakarta.validation.ConstraintViolationException;
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+	@ExceptionHandler(CampoInvalidoException.class)
+	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+	public ErroResposta handlerCampoInvalidoException(CampoInvalidoException e) {
+		return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validacao",
+				List.of(new ErroPadrao(e.getCampo(), e.getMessage())));
+	}
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
