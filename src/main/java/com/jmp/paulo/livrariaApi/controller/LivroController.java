@@ -1,10 +1,11 @@
 package com.jmp.paulo.livrariaApi.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,6 +51,18 @@ public class LivroController {
 
 		// 4. Retorna 200 OK com os dados do livro cadastrado
 		return ResponseEntity.created(location).body(resposta);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<LivroRespostaPesquisaDto>> findAll(){
+		List<Livro> livros = service.buscarTudo();
+		List<LivroRespostaPesquisaDto> listaDtos = new ArrayList<LivroRespostaPesquisaDto>();
+		for(Livro livro: livros) {
+			LivroRespostaPesquisaDto temp = new LivroRespostaPesquisaDto();
+			temp = MapperLivro.livroToDto(livro);
+			listaDtos.add(temp);
+		}
+		return ResponseEntity.ok(listaDtos);
 	}
 
 	@GetMapping("/{id}")

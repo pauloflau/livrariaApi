@@ -1,5 +1,6 @@
 package com.jmp.paulo.livrariaApi.services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +29,10 @@ public class LivroService {
 
 	public Optional<Livro> buscarId(UUID id) {
 		return livroRepository.findById(id);
+	}
+	
+	public List<Livro> buscarTudo() {
+		return livroRepository.findAll();
 	}
 	
 	public Livro salvar(Livro livro) {
