@@ -6,13 +6,13 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.jmp.paulo.livrariaApi.security.CustomUserDetailsService;
+import com.jmp.paulo.livrariaApi.services.UsuarioService;
 
 @Configuration
 @EnableWebSecurity
@@ -39,19 +39,8 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public UserDetailsService userDatailsService(PasswordEncoder encoder) {
-		// acima mostro que vou retornar um UserDetailsService
-
-		// vou criar os usuarios e pra isso uso a interface UserDetails
-		UserDetails user1 = User.builder().username("usuario1").password(encoder.encode("123"))// criptografo a senha
-				.roles("USER").build();
-
-		UserDetails user2 = User.builder().username("usuario2").password(encoder.encode("321"))// criptografo a senha
-				.roles("ADMIN").build();
-
-		// adiciono meus usuarios do tipo UserDetails e retornando eles em memoria. Essa
-		// classe que salva em memoria e do tipo UserDetailsService
-		return new InMemoryUserDetailsManager(user1, user2);
+	public UserDetailsService userDatailsService( UsuarioService usuarioService) {
+		return new CustomUserDetailsService(usuarioService);
 	}
 
 	@Bean
