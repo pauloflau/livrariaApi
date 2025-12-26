@@ -1,5 +1,6 @@
 package com.jmp.paulo.livrariaApi.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,9 @@ import com.jmp.paulo.livrariaApi.services.UsuarioService;
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
+	@Autowired
 	private UsuarioService service;
+	
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)

@@ -20,10 +20,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf(AbstractHttpConfigurer::disable).formLogin(Customizer.withDefaults())
-				.httpBasic(Customizer.withDefaults())
+		return http.csrf(AbstractHttpConfigurer::disable)
+				.headers(headers -> headers.frameOptions(frame -> frame.disable())).httpBasic(Customizer.withDefaults())
 
+				 .formLogin(Customizer.withDefaults())
+		         .httpBasic(Customizer.withDefaults())
+		
 				.authorizeHttpRequests(authorize -> {
+					authorize.requestMatchers("/h2-console/**").permitAll();
+
 					authorize.requestMatchers("/usuarios/**").permitAll();
 					authorize.requestMatchers("/login").permitAll();
 					authorize.requestMatchers("/autores/**").hasRole("ADMIN");
@@ -32,30 +37,25 @@ public class SecurityConfig {
 
 				}).build();
 	}
-	
-	 @Bean
-	  public UserDetailsService userDatailsService(PasswordEncoder encoder) {
-	//acima mostro que vou retornar um UserDetailsService
-			
-	//vou criar os usuarios e pra isso uso a interface UserDetails
-	    UserDetails user1 = User.builder()
-		.username("usuario1")
-		.password(encoder.encode("123"))//criptografo a senha
-		.roles("USER")
-		.build();
-			
-	    UserDetails user2 = User.builder()
-		.username("usuario2")
-		.password(encoder.encode("321"))//criptografo a senha
-		.roles("ADMIN")
-		.build();
 
-	//adiciono meus usuarios do tipo UserDetails e retornando eles em memoria. Essa classe que salva em memoria e do tipo UserDetailsService
-	    return new InMemoryUserDetailsManager(user1, user2);
-	  }
-		
-	  @Bean
-	  public PasswordEncoder passwordEncoder() {//interface p criptografar a senha
-	    return new BCryptPasswordEncoder(10); //defino o metodo de criptografia (byCryptPasswordEncoder) da senha
-	  }
+	@Bean
+	public UserDetailsService userDatailsService(PasswordEncoder encoder) {
+		// acima mostro que vou retornar um UserDetailsService
+
+		// vou criar os usuarios e pra isso uso a interface UserDetails
+		UserDetails user1 = User.builder().username("usuario1").password(encoder.encode("123"))// criptografo a senha
+				.roles("USER").build();
+
+		UserDetails user2 = User.builder().username("usuario2").password(encoder.encode("321"))// criptografo a senha
+				.roles("ADMIN").build();
+
+		// adiciono meus usuarios do tipo UserDetails e retornando eles em memoria. Essa
+		// classe que salva em memoria e do tipo UserDetailsService
+		return new InMemoryUserDetailsManager(user1, user2);
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {// interface p criptografar a senha
+		return new BCryptPasswordEncoder(10); // defino o metodo de criptografia (byCryptPasswordEncoder) da senha
+	}
 }
