@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class LivroController {
 	private LivroService service;
 
 	@PostMapping
+	@PreAuthorize("hasRole('GERENTE')")
 	public ResponseEntity<?> salvar(@RequestBody @Valid LivroCadastroDto dto) {
 
 		// 1. Converte o DTO de entrada em uma entidade Livro
@@ -54,6 +56,7 @@ public class LivroController {
 	}
 	
 	@GetMapping
+	@PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
 	public ResponseEntity<List<LivroRespostaPesquisaDto>> findAll(){
 		List<Livro> livros = service.buscarTudo();
 		List<LivroRespostaPesquisaDto> listaDtos = new ArrayList<LivroRespostaPesquisaDto>();
@@ -66,6 +69,7 @@ public class LivroController {
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
 	public ResponseEntity<LivroRespostaPesquisaDto> obterId(@PathVariable String id) {
 		UUID idLivro = UUID.fromString(id);
 		Optional<Livro> livro = service.buscarId(idLivro);
@@ -78,6 +82,7 @@ public class LivroController {
 	}
 
 	@DeleteMapping("{id}")
+	@PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
 	public ResponseEntity<Object> deletar(@PathVariable UUID id) {
 
 		Optional<Livro> buscarLivro = service.buscarId(id);
@@ -91,6 +96,7 @@ public class LivroController {
 	}
 	
 	@PutMapping("{id}")
+	@PreAuthorize("hasAnyRole('OPERADOR', 'GERENTE')")
 	   public ResponseEntity<Void> atualizar(@PathVariable UUID id, @RequestBody LivroCadastroDto dto) {
 
 		Optional<Livro> buscarLivro = service.buscarId(id);// busco esse id

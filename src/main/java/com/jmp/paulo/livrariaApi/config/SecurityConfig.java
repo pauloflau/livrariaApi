@@ -3,6 +3,7 @@ package com.jmp.paulo.livrariaApi.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,6 +17,7 @@ import com.jmp.paulo.livrariaApi.services.UsuarioService;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
 	@Bean
@@ -31,8 +33,6 @@ public class SecurityConfig {
 
 					authorize.requestMatchers("/usuarios/**").permitAll();
 					authorize.requestMatchers("/login").permitAll();
-					authorize.requestMatchers("/autores/**").hasRole("ADMIN");
-					authorize.requestMatchers("/livros/**").hasAnyRole("USER", "ADMIN");
 					authorize.anyRequest().authenticated();
 
 				}).build();

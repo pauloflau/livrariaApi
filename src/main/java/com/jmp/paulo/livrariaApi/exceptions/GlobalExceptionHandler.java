@@ -1,5 +1,6 @@
 package com.jmp.paulo.livrariaApi.exceptions;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,13 @@ public class GlobalExceptionHandler {
 				.map(fe -> new ErroPadrao(fe.getField(), fe.getDefaultMessage())).collect(Collectors.toList());
 
 		return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validacao", listaErros);
+	}
+	
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ErroResposta handleAccessDeniedException(AccessDeniedException e) {
+		e.printStackTrace(); // Ou use logger
+		return new ErroResposta(HttpStatus.FORBIDDEN.value(), "Acesso Negado", List.of());
 	}
 
 	@ExceptionHandler(Exception.class)
