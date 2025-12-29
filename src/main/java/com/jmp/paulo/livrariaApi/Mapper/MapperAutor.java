@@ -22,6 +22,7 @@ public class MapperAutor {
 		dto.setNome(autor.getNome());
 		dto.setNacionalidade(autor.getNacionalidade());
 		dto.setDataNascimento(autor.getDataNascimento());
+		dto.setIdUsuario(autor.getIdUSuario());
 		return dto;
 	}
 }

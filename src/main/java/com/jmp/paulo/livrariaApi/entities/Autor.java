@@ -51,17 +51,28 @@ public class Autor {
 	@Column(name = "data_atualizacao", nullable = false)
 	private LocalDateTime dataAtualizacao;
 
+	private UUID idUsuario;
+	
 	public Autor() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Autor(UUID id, String nome, LocalDate dataNascimento, String nacionalidade) {
+
+
+	public Autor(UUID id, String nome, LocalDate dataNascimento, String nacionalidade, List<Livro> livros,
+			LocalDateTime dataCadastro, LocalDateTime dataAtualizacao, UUID idUsuario) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.nacionalidade = nacionalidade;
+		this.livros = livros;
+		this.dataCadastro = dataCadastro;
+		this.dataAtualizacao = dataAtualizacao;
+		this.idUsuario = idUsuario;
 	}
+
+
 
 	public UUID getId() {
 		return id;
@@ -118,6 +129,19 @@ public class Autor {
 	public void setLivros(List<Livro> livros) {
 		this.livros = livros;
 	}
+
+	
+	public UUID getIdUSuario() {
+		return idUsuario;
+	}
+
+
+
+	public void setIdUSuario(UUID idUSuario) {
+		this.idUsuario = idUSuario;
+	}
+
+
 
 	@Override
 	public int hashCode() {

@@ -21,16 +21,28 @@ public class AutorDto {
 	@Size(min = 5, max=50, message="campo fora do tamanho padrão")
 	private String nacionalidade;
 	
+	private UUID idUsuario;
+	
 	public AutorDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AutorDto(String nome, LocalDate dataNascimento, String nacionalidade) {
+
+
+	public AutorDto(UUID id,
+			@NotBlank(message = "Campo obrigatorio") @Size(min = 1, max = 100, message = "campo fora do tamanho padrão") String nome,
+			@NotNull(message = "Campo obrigatorio") @Past(message = "não pode ser uma data futura") LocalDate dataNascimento,
+			@NotNull(message = "Campo obrigatorio") @Size(min = 5, max = 50, message = "campo fora do tamanho padrão") String nacionalidade,
+			UUID idUsuario) {
 		super();
+		this.id = id;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.nacionalidade = nacionalidade;
+		this.idUsuario = idUsuario;
 	}
+
+
 
 	public UUID getId() {
 		return id;
@@ -62,6 +74,18 @@ public class AutorDto {
 
 	public void setNacionalidade(String nacionalidade) {
 		this.nacionalidade = nacionalidade;
+	}
+
+
+
+	public UUID getIdUsuario() {
+		return idUsuario;
+	}
+
+
+
+	public void setIdUsuario(UUID idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 	
 }

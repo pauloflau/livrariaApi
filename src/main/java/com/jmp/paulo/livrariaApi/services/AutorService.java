@@ -6,18 +6,23 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.jmp.paulo.livrariaApi.entities.Autor;
+import com.jmp.paulo.livrariaApi.entities.Usuario;
 import com.jmp.paulo.livrariaApi.repositories.AutorRepository;
+import com.jmp.paulo.livrariaApi.security.SecurityService;
 
 @Service
 public class AutorService {
 	
 	private AutorRepository autorRepository;
+	private SecurityService securityService;
 
-	public AutorService(AutorRepository autorRepository) {
+	
+	public AutorService(AutorRepository autorRepository, SecurityService securityService) {
 		super();
 		this.autorRepository = autorRepository;
+		this.securityService = securityService;
 	}
-	
+
 	public Autor atualizar(Autor autor) {
 		return autorRepository.save(autor);
 	}
@@ -47,6 +52,8 @@ public class AutorService {
 	}
 	
 	public Autor salvar(Autor autor) {
+		Usuario usuario = securityService.obterUsuarioLogado();
+		autor.setIdUSuario(usuario.getId());
 		return autorRepository.save(autor);
 	}
 

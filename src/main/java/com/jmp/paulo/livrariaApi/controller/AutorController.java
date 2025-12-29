@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.jmp.paulo.livrariaApi.Mapper.MapperAutor;
 import com.jmp.paulo.livrariaApi.dto.AutorDto;
 import com.jmp.paulo.livrariaApi.entities.Autor;
+import com.jmp.paulo.livrariaApi.security.SecurityService;
 import com.jmp.paulo.livrariaApi.services.AutorService;
 
 import jakarta.validation.Valid;
@@ -30,10 +31,12 @@ import jakarta.validation.Valid;
 public class AutorController {
 
 	private AutorService autorService;
+	public SecurityService securityService;
 
-	public AutorController(AutorService autorService) {
+	public AutorController(AutorService autorService, SecurityService securityService) {
 		super();
 		this.autorService = autorService;
+		this.securityService = securityService;
 	}
 	
 	@PutMapping("{idAutor}")
@@ -106,6 +109,7 @@ public class AutorController {
 
 	@PostMapping
 	public ResponseEntity<?> salvar(@RequestBody @Valid AutorDto dto) {
+		
 		Autor autor = autorService.salvar(MapperAutor.dtoToAutor(dto));
 		
 		AutorDto autorDto = MapperAutor.autorToDto(autor);
