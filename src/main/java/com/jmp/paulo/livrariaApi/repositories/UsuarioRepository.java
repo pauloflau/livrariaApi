@@ -12,4 +12,5 @@ import com.jmp.paulo.livrariaApi.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, UUID>{
 	Optional<Usuario> findByLogin(String login);
+	Optional<Usuario> findByEmail(String email);//metodo p buscar por email
 }

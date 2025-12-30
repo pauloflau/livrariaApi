@@ -7,12 +7,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.jmp.paulo.livrariaApi.security.CustomUserDetailsService;
+import com.jmp.paulo.livrariaApi.security.LoginSocialSuccessHandler;
 import com.jmp.paulo.livrariaApi.services.UsuarioService;
 
 @Configuration
@@ -21,12 +23,13 @@ import com.jmp.paulo.livrariaApi.services.UsuarioService;
 public class SecurityConfig {
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http,
+			LoginSocialSuccessHandler successHandler) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
-				.headers(headers -> headers.frameOptions(frame -> frame.disable())).httpBasic(Customizer.withDefaults())
-
-				 .formLogin(Customizer.withDefaults())
-		         .httpBasic(Customizer.withDefaults())
+				.headers(headers -> headers.frameOptions(frame -> frame.disable()))
+				
+				.formLogin(Customizer.withDefaults())
+				.httpBasic(Customizer.withDefaults())
 		
 				.authorizeHttpRequests(authorize -> {
 					authorize.requestMatchers("/h2-console/**").permitAll();
@@ -35,10 +38,21 @@ public class SecurityConfig {
 					authorize.requestMatchers("/login").permitAll();
 					authorize.anyRequest().authenticated();
 
-				}).build();
+				})
+				//.oauth2Login(Customizer.withDefaults())
+				.oauth2Login(oauth2 -> {
+					oauth2.successHandler(successHandler);
+				})
+				.build();
 	}
 
 	@Bean
+	public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+		//DEFINO PARA NAO USAR MAIS NENHUM PREFIXO
+		return new GrantedAuthorityDefaults("");
+	}
+	
+	//@Bean
 	public UserDetailsService userDatailsService( UsuarioService usuarioService) {
 		return new CustomUserDetailsService(usuarioService);
 	}

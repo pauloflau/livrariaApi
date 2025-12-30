@@ -3,6 +3,7 @@ package com.jmp.paulo.livrariaApi.entities;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,9 @@ public class Usuario {
 	private UUID id;
 	
 	private String login;
+	
+    @Column(name = "email", nullable = false, unique = true)
+	private String email;
 	
 	private String senha;
 	

@@ -4,15 +4,17 @@ import java.util.List;
 
 public class UsuarioDto {
 	private String login;
+	private String email;
 	private String senha;
 	private List<String> roles;
-	
+
 	public UsuarioDto() {
 	}
 
-	public UsuarioDto(String login, String senha, List<String> roles) {
+	public UsuarioDto(String login, String email, String senha, List<String> roles) {
 		super();
 		this.login = login;
+		this.email = email;
 		this.senha = senha;
 		this.roles = roles;
 	}
@@ -23,6 +25,14 @@ public class UsuarioDto {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -41,7 +51,4 @@ public class UsuarioDto {
 		this.roles = roles;
 	}
 
-		
 }
-	
-
