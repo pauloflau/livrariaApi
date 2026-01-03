@@ -53,7 +53,14 @@ public class AutorService {
 	
 	public Autor salvar(Autor autor) {
 		Usuario usuario = securityService.obterUsuarioLogado();
-		autor.setIdUSuario(usuario.getId());
+		 if (usuario != null) {
+		        autor.setIdUSuario(usuario.getId());
+		    } else {
+		        // chamada via OAuth2 client_credentials (sistema)
+		        autor.setIdUSuario(null); 
+		        // ou, se preferir, um ID técnico fixo
+		        // autor.setIdUSuario(0L);
+		    }
 		return autorRepository.save(autor);
 	}
 
