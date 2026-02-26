@@ -65,12 +65,17 @@ Após iniciar o projeto:
 ### 📧 Contato
 
 Caso queira trocar ideias ou sugerir melhorias:  
-[LinkedIn](https://www.linkedin.com/in/pauloflau/) 
+**Paulo Flau**
+- [LinkedIn](https://www.linkedin.com/in/pauloflau/)
+
+---
 
 ### 🤝 Contribuição
 
 Sinta-se à vontade para abrir issues ou enviar pull requests.
 Toda ajuda é bem-vinda!
+
+---
 
 ### 📄 Licença
 
